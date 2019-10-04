@@ -1,9 +1,8 @@
 from flask import request
 from flask_restful import Resource
-from marshmallow import ValidationError
 
 from Model import db, CategorySchema, Category
-import json
+
 categories_schema = CategorySchema()
 category_schema = CategorySchema()
 
@@ -12,7 +11,8 @@ class CategoryResource(Resource):
     @staticmethod
     def get():
         categories = Category.query.all()
-        categories = categories_schema.dump(categories).data
+        print(categories)
+        categories = list(map(lambda c: categories_schema.dump(c), categories))
         return {'status': 'success', 'data': categories}, 200
 
     @staticmethod
