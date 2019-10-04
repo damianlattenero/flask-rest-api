@@ -34,7 +34,7 @@ class CategoryResource(Resource):
         db.session.add(category)
         db.session.commit()
 
-        result = category_schema.dump(category).data
+        result = category_schema.dump(category)
 
         return {'status': 'success', 'data': result}, 201
 
