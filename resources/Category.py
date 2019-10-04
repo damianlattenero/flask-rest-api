@@ -3,7 +3,7 @@ from flask_restful import Resource
 
 from Model import db, CategorySchema, Category
 
-categories_schema = CategorySchema()
+categories_schema = CategorySchema(many = True)
 category_schema = CategorySchema()
 
 
@@ -11,8 +11,7 @@ class CategoryResource(Resource):
     @staticmethod
     def get():
         categories = Category.query.all()
-        print(categories)
-        categories = list(map(lambda c: categories_schema.dump(c), categories))
+        categories = categories_schema.dump(categories)
         return {'status': 'success', 'data': categories}, 200
 
     @staticmethod
