@@ -1,10 +1,7 @@
 from flask import Flask
-from marshmallow import Schema, fields, pre_load, validate
-from flask_marshmallow import Marshmallow
+from marshmallow import Schema, fields, pre_load, validate, post_load
 from flask_sqlalchemy import SQLAlchemy
 
-
-ma = Marshmallow()
 db = SQLAlchemy()
 
 
@@ -30,12 +27,12 @@ class Category(db.Model):
         self.name = name
 
 
-class CategorySchema(ma.Schema):
+class CategorySchema(Schema):
     id = fields.Integer()
     name = fields.String(required=True)
 
 
-class CommentSchema(ma.Schema):
+class CommentSchema(Schema):
     id = fields.Integer(dump_only=True)
     category_id = fields.Integer(required=True)
     comment = fields.String(required=True, validate = validate.Length(1))
